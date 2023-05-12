@@ -1,3 +1,5 @@
+const { cakeActions } = require('../cake/cakeSlice');
+
 const createSlice = require('@reduxjs/toolkit').createSlice
 
 const initialState = {
@@ -17,10 +19,17 @@ const icecreamScoop = createSlice({
     },
     //if you want to manipulate the state based on another reducer - use ExtraReducers
     //here, for instance, we are giving away 1 scoop of ice cream, everytime you buy a cake
-    extraReducers: {
-        ['cake/ordered']: (state, action) => {
-            state.numOfIcecreams--;
-        }
+    // extraReducers: {
+    //     ['cake/ordered']: (state, action) => {
+    //         state.numOfIcecreams--;
+    //     }
+    // }
+
+    //Instead of extraReducers, you can do the same using a builder function
+    extraReducers: (builder) => {
+        builder.addCase(cakeActions.ordered, state => {
+            state.numOfIcecreams--
+        })
     }
 })
 
